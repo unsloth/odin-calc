@@ -1,2 +1,2 @@
 # odin-calc
-Calculator project in javascript
+Calculator project in javascript. Written following the Odin Project.
