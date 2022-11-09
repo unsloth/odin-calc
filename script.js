@@ -48,6 +48,8 @@ operators.forEach(btn => btn.addEventListener("click", inputOperator));
 function inputOperator(e) {
     if ("operator" in expression) {
         checkExpression();
+        // Prevents you from continuing if the previous result was a string due 
+        // to a divide-by-zero
         if (!Number.isNaN(Number(display.textContent))) {
             expression.operand1 = display.textContent;
             expression.operator = this.classList.value;
@@ -66,8 +68,8 @@ equalButton.addEventListener("click", checkExpression);
 // This checks if the expression is complete, and if it is it solves it and 
 // resets the expression.
 function checkExpression() {
-    expression.operand2 = display.textContent;
-    if (("operand1" in expression) && ("operand2" in expression) && ("operator" in expression)) {
+    if (("operand1" in expression) && ("operator" in expression)) {
+        expression.operand2 = display.textContent;
         printExpression();
         display.textContent = operate();
         exprDisplay.textContent = exprDisplay.textContent.concat(`=${display.textContent}`);
