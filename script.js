@@ -48,8 +48,10 @@ operators.forEach(btn => btn.addEventListener("click", inputOperator));
 function inputOperator(e) {
     if ("operator" in expression) {
         checkExpression();
-        expression.operand1 = display.textContent;
-        expression.operator = this.classList.value;
+        if (!Number.isNaN(Number(display.textContent))) {
+            expression.operand1 = display.textContent;
+            expression.operator = this.classList.value;
+        }
     } else {
         expression.operand1 = display.textContent;
         expression.operator = this.classList.value;
