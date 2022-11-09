@@ -12,16 +12,17 @@ numbers.forEach(btn => btn.addEventListener('click', inputNumber));
 // If the display shows 0, it should be replaced by the number. Otherwise, any 
 // number should be appended as a digit.
 function inputNumber(e) {
-    if (!("operand1" in expression) && this.textContent != ".") {
-        display.textContent = `${this.textContent}`;
-    } else if (display.textContent === "0" && this.textContent != ".") {
+    if (!("operand1" in expression)) {
+        display.textContent = "0";
+        // Value of operand1 doesn't actually matter since it will be replaced.
+        // Main point is that it exists
+        expression.operand1 = display.textContent;
+    }
+    if (display.textContent === "0" && this.textContent != ".") {
         display.textContent = `${this.textContent}`;
     } else {
         display.textContent = display.textContent.concat(`${this.textContent}`);
     }
-    // Value of operand1 doesn't actually matter since it will be replaced.
-    // Main point is that it exists
-    expression.operand1 = display.textContent;
     checkDecimal();
 }
 
