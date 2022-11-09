@@ -32,24 +32,45 @@ const exprDisplay = document.querySelector(".expr-display");
 const operators = document.querySelectorAll(".operators button");
 operators.forEach(btn => btn.addEventListener("click", inputOperator));
 
+// If there is already an operator, first we solve the previous expression, 
+// then we use the solution as the first operand of the new expression with the 
+// new operator. Otherwise we just record the inputted number and operator to 
+// start a new expression. Also, if we're continuing a previous expression, we 
+// keep the old expression on the exprDisplay. Otherwise we print the new expression.
 function inputOperator(e) {
-    if (!("operator" in expression)) {
+    if ("operator" in expression) {
+        checkExpression();
         expression.operand1 = display.textContent;
         expression.operator = this.classList.value;
-
-        exprDisplay.textContent = display.textContent.concat(`${this.textContent}`)
-        display.textContent = 0;
+    } else {
+        expression.operand1 = display.textContent;
+        expression.operator = this.classList.value;
+        printExpression();
     }
-    // else if operand2 exists, perform 'operate' function and place result in operand1
-    // and place operator in operator and update display.
+    display.textContent = 0;
 }
 
 const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", checkExpression);
 
+// This checks if the expression is complete, and if it is it solves it and 
+// resets the expression.
 function checkExpression() {
     expression.operand2 = display.textContent;
-    exprDisplay.textContent = exprDisplay.textContent.concat(`${display.textContent}=${operate()}`);
+    if (("operand1" in expression) && ("operand2" in expression) && ("operator" in expression)) {
+        printExpression();
+        display.textContent = operate();
+        exprDisplay.textContent = exprDisplay.textContent.concat(`=${display.textContent}`);
+        expression = {};
+    }
+}
+
+function printExpression() {
+    let exprString = ""
+    for (key in expression) {
+        exprString = exprString.concat(`${expression[key]}`);
+    }
+    exprDisplay.textContent = exprString;
 }
 
 function operate() {
