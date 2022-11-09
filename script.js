@@ -12,17 +12,17 @@ numbers.forEach(btn => btn.addEventListener('click', inputNumber));
 // If the display shows 0, it should be replaced by the number. Otherwise, any 
 // number should be appended as a digit.
 function inputNumber(e) {
-    if (!("operand1" in expression)) {
+    if (!("operand1" in expression) && this.textContent != ".") {
         display.textContent = `${this.textContent}`;
-        // Value of operand1 doesn't actually matter since it will be replaced.
-        // Main point is that it exists
-        expression.operand1 = display.textContent;
-    } else if (display.textContent === "0") {
+    } else if (display.textContent === "0" && this.textContent != ".") {
         display.textContent = `${this.textContent}`;
     } else {
         display.textContent = display.textContent.concat(`${this.textContent}`);
-        checkDecimal();
     }
+    // Value of operand1 doesn't actually matter since it will be replaced.
+    // Main point is that it exists
+    expression.operand1 = display.textContent;
+    checkDecimal();
 }
 
 // Makes sure there can be at most 1 decimal per number and turns off the 
@@ -60,6 +60,7 @@ function inputOperator(e) {
         printExpression();
     }
     display.textContent = 0;
+    checkDecimal();
 }
 
 const equalButton = document.querySelector(".equal");
@@ -117,6 +118,7 @@ function clearAll() {
     display.textContent = "0";
     exprDisplay.textContent = "";
     expression = {};
+    checkDecimal();
 }
 
 const backspace = document.querySelector(".backspace");
@@ -124,4 +126,5 @@ backspace.addEventListener("click", erase);
 
 function erase() {
     display.textContent = display.textContent.substring(0, display.textContent.length - 1)
+    checkDecimal();
 }
