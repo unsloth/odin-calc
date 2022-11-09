@@ -88,8 +88,8 @@ function printExpression() {
 }
 
 function operate() {
-    let a = expression.operand1;
-    let b = expression.operand2;
+    let a = Number(expression.operand1);
+    let b = Number(expression.operand2);
     let operator = expression.operator;
 
     switch (operator) {
