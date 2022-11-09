@@ -7,11 +7,19 @@ const numbers = document.querySelectorAll(".numbers button");
 numbers.forEach(btn => btn.addEventListener('click', inputNumber));
 
 // Sets the rules for entering the number with the number buttons.
+// If there is no operand1 in expression, any number in the display is the result
+// of the prev. expression and isn't necessary so should be replaced by the number.
+// If the display shows 0, it should be replaced by the number. Otherwise, any 
+// number should be appended as a digit.
 function inputNumber(e) {
-    if (display.textContent === "0") {
-        display.textContent = `${this.textContent}`
-    }
-    else {
+    if (!("operand1" in expression)) {
+        display.textContent = `${this.textContent}`;
+        // Value of operand1 doesn't actually matter since it will be replaced.
+        // Main point is that it exists
+        expression.operand1 = display.textContent;
+    } else if (display.textContent === "0") {
+        display.textContent = `${this.textContent}`;
+    } else {
         display.textContent = display.textContent.concat(`${this.textContent}`);
         checkDecimal();
     }
