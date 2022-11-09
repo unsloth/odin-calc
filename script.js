@@ -109,3 +109,19 @@ function operate() {
             break;
     }
 }
+
+const clearButton = document.querySelector(".clear");
+clearButton.addEventListener("click", clearAll);
+
+function clearAll() {
+    display.textContent = "0";
+    exprDisplay.textContent = "";
+    expression = {};
+}
+
+const backspace = document.querySelector(".backspace");
+backspace.addEventListener("click", erase);
+
+function erase() {
+    display.textContent = display.textContent.substring(0, display.textContent.length - 1)
+}
